@@ -14,6 +14,66 @@ def b_search(array, value, left_i = 0, right_i = array.size - 1)
   end
 end
 
+#
+# Object-oriented (kind of) immutable solution
+#
+
+class ArraySlice
+  def initialize(array, first_index, last_index)
+    self.array = array
+    self.first_index = first_index
+    self.last_index = last_index
+  end
+
+  def size
+    [0, last_index - first_index + 1].max
+  end
+
+  def [](relative_index)
+    return nil if out_of_bounds?(relative_index)
+    array[actual_index(relative_index)]
+  end
+
+  def to_a
+    array[first_index..last_index]
+  end
+
+  def slice(relative_a, relative_b)
+    ArraySlice.new(array, actual_index(relative_a), actual_index(relative_b))
+  end
+
+  def b_search(value)
+    return nil if size.zero?
+
+    relative_mid = size / 2
+
+    return actual_index(relative_mid) if self[relative_mid] == value
+
+    next_slice = if self[relative_mid] < value
+                   slice(relative_mid + 1, size - 1)
+                 else
+                   slice(0, relative_mid - 1)
+                 end
+
+    next_slice.b_search(value)
+  end
+
+  private
+
+  attr_accessor :array, :first_index, :last_index
+
+  def actual_index(relative_index)
+    first_index + relative_index
+  end
+
+  def out_of_bounds?(relative_index)
+    actual = actual_index(relative_index)
+    actual < first_index || actual > last_index
+  end
+end
+
+
+
 
 
 
@@ -55,5 +115,13 @@ class TestClassic < Minitest::Test
 
   def subject(array, value)
     b_search(array, value)
+  end
+end
+
+class TestOOP < Minitest::Test
+  include Tests
+
+  def subject(array, value)
+    ArraySlice.new(array, 0, array.size - 1).b_search(value)
   end
 end
