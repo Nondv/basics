@@ -2,16 +2,15 @@
 # Classic solution
 #
 def b_search(array, value, left_i = 0, right_i = array.size - 1)
-  return nil if array.empty?
-  return (array[left_i] == value ? left_i : nil) if left_i == right_i
+  return nil if left_i > right_i
 
   mid_i = left_i + (right_i - left_i) / 2
   return mid_i if array[mid_i] == value
 
   if array[mid_i] < value
-    b_search(array, value, mid_i, right_i)
+    b_search(array, value, mid_i + 1, right_i)
   else
-    b_search(array, value, left_i, mid_i)
+    b_search(array, value, left_i, mid_i - 1)
   end
 end
 
