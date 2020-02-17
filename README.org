@@ -1,0 +1,4 @@
+* Algorithms
+
+I am re-discovering basic data structures and algorithms.
+As an additional fun challenge I decided to write them in multiple languages or/and styles
