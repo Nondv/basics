@@ -1,18 +1,37 @@
 #
 # Classic solution
 #
-def b_search(array, value, left_i = 0, right_i = array.size - 1)
+
+def b_search(array, value)
+  left_i = 0
+  right_i = array.size - 1
+
+  while left_i <= right_i
+    mid_i = left_i + (right_i - left_i) / 2
+    return mid_i if array[mid_i] == value
+
+    if array[mid_i] < value
+      left_i = mid_i + 1
+    else
+      right_i = mid_i - 1
+    end
+  end
+  nil
+end
+
+def rec_b_search(array, value, left_i = 0, right_i = array.size - 1)
   return nil if left_i > right_i
 
   mid_i = left_i + (right_i - left_i) / 2
   return mid_i if array[mid_i] == value
 
   if array[mid_i] < value
-    b_search(array, value, mid_i + 1, right_i)
+    rec_b_search(array, value, mid_i + 1, right_i)
   else
-    b_search(array, value, left_i, mid_i - 1)
+    rec_b_search(array, value, left_i, mid_i - 1)
   end
 end
+
 
 #
 # Object-oriented (kind of) immutable solution
@@ -115,6 +134,14 @@ class TestClassic < Minitest::Test
 
   def subject(array, value)
     b_search(array, value)
+  end
+end
+
+class TestRecClassic < Minitest::Test
+  include Tests
+
+  def subject(array, value)
+    rec_b_search(array, value)
   end
 end
 
