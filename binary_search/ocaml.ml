@@ -12,7 +12,7 @@ let b_search array value =
         Found mid
       else
         if array.(mid) < value then
-          aux (left + 1) right
+          aux (mid + 1) right
         else
           aux left (mid - 1)
   in
