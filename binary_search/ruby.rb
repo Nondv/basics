@@ -91,6 +91,14 @@ class ArraySlice
   end
 end
 
+#
+# Code golf
+#
+S=->(a,v,l=0,r=a.size-1){
+l>r&&next
+m=(l+r)/2
+a[m]==v ? m : a[m]<v ? S[a,v,m+1,r] : S[a,v,l,m-1]
+}
 
 
 
@@ -150,5 +158,13 @@ class TestOOP < Minitest::Test
 
   def subject(array, value)
     ArraySlice.new(array, 0, array.size - 1).b_search(value)
+  end
+end
+
+class TestCodeGolf < Minitest::Test
+  include Tests
+
+  def subject(array, value)
+    S[array, value]
   end
 end
