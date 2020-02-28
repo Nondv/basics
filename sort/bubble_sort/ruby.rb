@@ -42,6 +42,19 @@ def shaker(array)
   array
 end
 
+def selection(array)
+  array = array.clone
+
+  (0...array.size).each do |i|
+    index_of_min = i
+    (i...array.size).each do |j|
+      index_of_min = j if array[j] < array[index_of_min]
+    end
+    array[i], array[index_of_min] = array[index_of_min], array[i]
+  end
+
+  array
+end
 
 
 
@@ -71,5 +84,14 @@ class TestShaker < Minitest::Test
 
   def subject(array)
     shaker(array)
+  end
+end
+
+
+class TestSelection < Minitest::Test
+  include Tests
+
+  def subject(array)
+    selection(array)
   end
 end
