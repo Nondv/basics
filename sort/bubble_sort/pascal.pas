@@ -2,7 +2,7 @@ type IntArray = Array of Integer;
 
 Function copyArray(arr : IntArray) : IntArray;
 var
-   i   : Integer;
+   i      : Integer;
    result : IntArray;
 begin
    setLength(result, length(arr));
