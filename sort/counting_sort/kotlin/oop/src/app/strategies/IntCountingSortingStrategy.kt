@@ -1,7 +1,11 @@
 package app.strategies
 
 import app.*
+import app.oneToOneRelations.IntIdentityRelation
+import app.strategies.countingSortingStrategy.AscendingIterable
 
 object IntCountingSortingStrategy : SortingStrategy<Int> {
-    override fun sort(coll: Collection<Int>) = AscendingIntIterable(coll).toList()
+    private val innerStrategy = CountingSortingStrategy(IntIdentityRelation)
+
+    override fun sort(coll: Collection<Int>) = innerStrategy.sort(coll)
 }
